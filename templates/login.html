@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Login • MSN Engineering Inventory{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="modern-card p-4 p-md-5" style="max-width: 420px; width: 100%;">
+
+        <!-- Logo & Title -->
+        <div class="text-center mb-4">
+            <img src="/static/logo.png"
+                 alt="MSN Engineering Logo"
+                 class="mb-3"
+                 style="height: 70px;">
+
+            <h4 class="fw-bold text-maroon mb-1">MSN Engineering (Pvt) Ltd</h4>
+            <p class="text-muted small mb-0">Inventory Management System</p>
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-person me-1"></i> Username
+                </label>
+                <input type="text"
+                       name="username"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your username"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    <i class="bi bi-lock me-1"></i> Password
+                </label>
+                <input type="password"
+                       name="password"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your password"
+                       required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-maroon btn-lg">
+                    <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                </button>
+            </div>
+        </form>
+
+        <!-- Login Info -->
+        <div class="mt-4 pt-3 border-top">
+            <p class="fw-semibold small mb-2 text-muted">
+                <i class="bi bi-info-circle me-1"></i> Demo Accounts
+            </p>
+
+            <div class="small text-muted">
+                <div class="mb-2">
+                    <i class="bi bi-shield-lock me-1"></i>
+                    <strong>Admin:</strong>
+                    admin1 / admin123<br>
+                    admin2 / admin456
+                </div>
+                <div>
+                    <i class="bi bi-eye me-1"></i>
+                    <strong>Viewer:</strong>
+                    viewer1 / viewer123<br>
+                    viewer2 / viewer456
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

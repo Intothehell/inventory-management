@@ -1,0 +1,489 @@
+{% extends "base.html" %}
+
+{% block title %}Add Item • MSN Engineering Inventory{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0 px-lg-4">
+    <!-- Page Header -->
+    <div class="modern-card p-4 mb-4" data-aos="fade-up">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+            <div class="mb-3 mb-md-0">
+                <h1 class="h3 fw-bold text-maroon mb-2">
+                    <i class="bi bi-plus-circle me-2 icon-smooth"></i>Add New Inventory Item
+                </h1>
+                <p class="text-muted mb-0">Fill in the details below to add a new item to your inventory</p>
+            </div>
+            <div>
+                <span class="badge bg-light text-dark">
+                    <i class="bi bi-info-circle me-1"></i>Serial number auto-generated
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Form -->
+    <div class="modern-card p-4 mb-5" data-aos="fade-up" data-aos-delay="100">
+        <form method="POST" class="row g-4" id="addItemForm">
+            <!-- Part Name & Type -->
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control modern-input" id="part_name" name="part_name" 
+                           placeholder=" " required>
+                    <label for="part_name" class="text-maroon">
+                        <i class="bi bi-tag me-2 icon-smooth"></i>Part Name *
+                    </label>
+                    <div class="form-text">Enter the name of the part (e.g., Gate Valve, PVC Pipe)</div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select modern-input" id="part_type" name="part_type" required>
+                        <option value="" selected disabled>Select part type</option>
+                        <option value="Valve">Valve</option>
+                        <option value="Pipe">Pipe</option>
+                        <option value="Coupling">Coupling</option>
+                        <option value="Fitting">Fitting</option>
+                        <option value="Flange">Flange</option>
+                        <option value="Gasket">Gasket</option>
+                        <option value="Bolt">Bolt</option>
+                        <option value="Nut">Nut</option>
+                        <option value="Washer">Washer</option>
+                        <option value="Electrical">Electrical Component</option>
+                        <option value="Mechanical">Mechanical Part</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label for="part_type" class="text-maroon">
+                        <i class="bi bi-gear me-2 icon-smooth"></i>Part Type *
+                    </label>
+                </div>
+            </div>
+
+            <!-- Category & Dimensions -->
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <select class="form-select modern-input" id="category" name="category" required>
+                        <option value="" selected disabled>Select category</option>
+                        <option value="Industrial">Industrial</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Construction">Construction</option>
+                        <option value="Raw Material">Raw Material</option>
+                        <option value="Finished Goods">Finished Goods</option>
+                        <option value="Spare Parts">Spare Parts</option>
+                        <option value="Consumables">Consumables</option>
+                        <option value="Tools">Tools</option>
+                        <option value="Equipment">Equipment</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label for="category" class="text-maroon">
+                        <i class="bi bi-folder me-2 icon-smooth"></i>Category *
+                    </label>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control modern-input" id="dimensions" name="dimensions" 
+                           placeholder=" ">
+                    <label for="dimensions" class="text-maroon">
+                        <i class="bi bi-rulers me-2 icon-smooth"></i>Dimensions
+                    </label>
+                    <div class="form-text">e.g., 2in x 4ft, 10mm, 1/2in</div>
+                </div>
+            </div>
+
+            <!-- Quantity & Unit Price -->
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="number" class="form-control modern-input" id="quantity" name="quantity" 
+                           placeholder=" " min="0" required>
+                    <label for="quantity" class="text-maroon">
+                        <i class="bi bi-box-seam me-2 icon-smooth"></i>Quantity *
+                    </label>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="number" class="form-control modern-input" id="unit_price" name="unit_price" 
+                           placeholder=" " min="0" step="0.01" required>
+                    <label for="unit_price" class="text-maroon">
+                        <i class="bi bi-currency-dollar me-2 icon-smooth"></i>Unit Price *
+                    </label>
+                    <div class="form-text">Enter price per unit</div>
+                </div>
+            </div>
+
+            <!-- Location & Supplier -->
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control modern-input" id="location" name="location" 
+                           placeholder=" ">
+                    <label for="location" class="text-maroon">
+                        <i class="bi bi-geo-alt me-2 icon-smooth"></i>Location
+                    </label>
+                    <div class="form-text">e.g., Shelf A3, Warehouse 2</div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control modern-input" id="supplier" name="supplier" 
+                           placeholder=" ">
+                    <label for="supplier" class="text-maroon">
+                        <i class="bi bi-truck me-2 icon-smooth"></i>Supplier
+                    </label>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="col-12">
+                <div class="form-floating">
+                    <textarea class="form-control modern-input" id="notes" name="notes" 
+                              placeholder=" " style="height: 120px"></textarea>
+                    <label for="notes" class="text-maroon">
+                        <i class="bi bi-card-text me-2 icon-smooth"></i>Notes
+                    </label>
+                    <div class="form-text">Any additional notes about this item (optional)</div>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="col-12">
+                <hr class="my-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+                    <div class="order-2 order-md-1">
+                        <small class="text-muted">
+                            <i class="bi bi-info-circle me-1 icon-smooth"></i>
+                            A unique serial number will be automatically generated
+                        </small>
+                    </div>
+                    <div class="order-1 order-md-2 d-flex gap-3">
+                        <a href="{{ url_for('view_inventory') }}" class="btn btn-maroon-outline">
+                            <i class="bi bi-x-circle me-2"></i>Cancel
+                        </a>
+                        <button type="submit" class="btn btn-maroon">
+                            <i class="bi bi-check-circle me-2"></i>Add to Inventory
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Quick Tips -->
+    <div class="modern-card p-4" data-aos="fade-up" data-aos-delay="150">
+        <h5 class="fw-bold text-maroon mb-3">
+            <i class="bi bi-lightbulb me-2 icon-smooth"></i>Quick Tips
+        </h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="border rounded-3 p-3 h-100">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="rounded-circle bg-success bg-opacity-10 p-2 me-3">
+                            <i class="bi bi-box text-success icon-smooth"></i>
+                        </div>
+                        <h6 class="mb-0 fw-semibold">Part Names</h6>
+                    </div>
+                    <p class="small text-muted mb-0">Use descriptive names like "Gate Valve - Bronze" or "PVC Pipe - 3in"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded-3 p-3 h-100">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="rounded-circle bg-primary bg-opacity-10 p-2 me-3">
+                            <i class="bi bi-rulers text-primary icon-smooth"></i>
+                        </div>
+                        <h6 class="mb-0 fw-semibold">Dimensions</h6>
+                    </div>
+                    <p class="small text-muted mb-0">Use standard formats: "2in x 4ft", "50mm", "1/2in", "90° elbow"</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="border rounded-3 p-3 h-100">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="rounded-circle bg-warning bg-opacity-10 p-2 me-3">
+                            <i class="bi bi-geo-alt text-warning icon-smooth"></i>
+                        </div>
+                        <h6 class="mb-0 fw-semibold">Location</h6>
+                    </div>
+                    <p class="small text-muted mb-0">Use consistent location codes like "WH1-A3" or "Shelf-B2"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Form Styles */
+    .modern-input {
+        border: 2px solid var(--gray-light);
+        border-radius: 12px;
+        padding: 16px 20px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: var(--white-pure);
+    }
+    
+    .modern-input:focus {
+        border-color: var(--maroon-light);
+        box-shadow: 0 0 0 4px rgba(193, 39, 45, 0.1);
+        transform: translateY(-2px);
+    }
+    
+    .form-floating > label {
+        padding-left: 3rem;
+        color: var(--gray-medium);
+    }
+    
+    .form-floating > .form-control:focus ~ label,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label,
+    .form-floating > .form-select ~ label {
+        color: var(--maroon-light);
+        transform: scale(0.85) translateY(-0.5rem) translateX(-0.15rem);
+    }
+    
+    .form-floating > .form-control:focus ~ label::before,
+    .form-floating > .form-control:not(:placeholder-shown) ~ label::before {
+        opacity: 1;
+    }
+    
+    .form-text {
+        font-size: 0.85rem;
+        margin-top: 6px;
+        color: var(--gray-medium);
+        padding-left: 0.5rem;
+    }
+    
+    /* Icon in form labels */
+    .form-floating label i {
+        position: absolute;
+        left: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.1rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .modern-input {
+            padding: 14px 16px;
+            font-size: 15px;
+        }
+        
+        .form-floating label i {
+            left: 1rem;
+            font-size: 1rem;
+        }
+        
+        .modern-card {
+            margin-left: -12px;
+            margin-right: -12px;
+            border-radius: 0;
+            border-left: none;
+            border-right: none;
+        }
+        
+        .d-flex.flex-column.flex-md-row {
+            flex-direction: column !important;
+        }
+        
+        .order-1, .order-2 {
+            order: 1 !important;
+            width: 100%;
+        }
+        
+        .btn-maroon, .btn-maroon-outline {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .row.g-3 > [class*="col-"] {
+            margin-bottom: 15px;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .container-fluid {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+        
+        .modern-card.p-4 {
+            padding: 20px !important;
+        }
+        
+        .form-floating {
+            margin-bottom: 20px;
+        }
+        
+        .d-flex.gap-3 {
+            flex-direction: column;
+            gap: 10px !important;
+        }
+    }
+    
+    /* Form validation */
+    .was-validated .modern-input:valid {
+        border-color: #198754;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.5rem) center;
+        background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
+    }
+    
+    .was-validated .modern-input:invalid {
+        border-color: #dc3545;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right calc(0.375em + 0.5rem) center;
+        background-size: calc(0.75em + 0.75rem) calc(0.75em + 0.75rem);
+    }
+    
+    /* Animation for form elements */
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .row.g-4 > [class*="col-"] {
+        animation: slideIn 0.5s ease-out;
+        animation-fill-mode: both;
+    }
+    
+    .row.g-4 > .col-md-6:nth-child(1) { animation-delay: 0.1s; }
+    .row.g-4 > .col-md-6:nth-child(2) { animation-delay: 0.2s; }
+    .row.g-4 > .col-md-6:nth-child(3) { animation-delay: 0.3s; }
+    .row.g-4 > .col-md-6:nth-child(4) { animation-delay: 0.4s; }
+    .row.g-4 > .col-md-6:nth-child(5) { animation-delay: 0.5s; }
+    .row.g-4 > .col-md-6:nth-child(6) { animation-delay: 0.6s; }
+    .row.g-4 > .col-md-6:nth-child(7) { animation-delay: 0.7s; }
+    .row.g-4 > .col-md-6:nth-child(8) { animation-delay: 0.8s; }
+    .row.g-4 > .col-12:nth-child(9) { animation-delay: 0.9s; }
+    
+    /* Focus animation */
+    .modern-input:focus {
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(193, 39, 45, 0.2);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(193, 39, 45, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(193, 39, 45, 0);
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('addItemForm');
+    const inputs = form.querySelectorAll('.modern-input');
+    
+    // Form validation
+    form.addEventListener('submit', function(event) {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+    }, false);
+    
+    // Real-time validation feedback
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            if (this.value.trim() !== '') {
+                this.classList.add('is-valid');
+                this.classList.remove('is-invalid');
+            } else if (this.required) {
+                this.classList.add('is-invalid');
+                this.classList.remove('is-valid');
+            }
+        });
+        
+        // Clear validation on focus
+        input.addEventListener('focus', function() {
+            this.classList.remove('is-invalid', 'is-valid');
+        });
+    });
+    
+    // Auto-calculate total value
+    const quantityInput = document.getElementById('quantity');
+    const priceInput = document.getElementById('unit_price');
+    
+    function calculateTotal() {
+        const quantity = parseFloat(quantityInput.value) || 0;
+        const price = parseFloat(priceInput.value) || 0;
+        const total = quantity * price;
+        
+        // Update any total display if exists
+        const totalDisplay = document.getElementById('totalValue');
+        if (totalDisplay) {
+            totalDisplay.textContent = '$' + total.toFixed(2);
+        }
+    }
+    
+    if (quantityInput && priceInput) {
+        quantityInput.addEventListener('input', calculateTotal);
+        priceInput.addEventListener('input', calculateTotal);
+    }
+    
+    // Add floating label animation
+    inputs.forEach(input => {
+        if (input.value.trim() !== '') {
+            input.previousElementSibling?.classList.add('active');
+        }
+        
+        input.addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                this.previousElementSibling?.classList.add('active');
+            } else {
+                this.previousElementSibling?.classList.remove('active');
+            }
+        });
+    });
+    
+    // Smooth icon animations
+    const icons = document.querySelectorAll('.icon-smooth');
+    icons.forEach(icon => {
+        icon.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(5deg)';
+            this.style.transition = 'all 0.3s ease';
+        });
+        
+        icon.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0)';
+        });
+    });
+    
+    // Responsive adjustments
+    function handleResponsiveForm() {
+        const isMobile = window.innerWidth < 768;
+        const formGroups = document.querySelectorAll('.form-floating');
+        
+        if (isMobile) {
+            formGroups.forEach(group => {
+                group.style.marginBottom = '20px';
+            });
+        } else {
+            formGroups.forEach(group => {
+                group.style.marginBottom = '';
+            });
+        }
+    }
+    
+    handleResponsiveForm();
+    window.addEventListener('resize', handleResponsiveForm);
+});
+</script>
+{% endblock %}

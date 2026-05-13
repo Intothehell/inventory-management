@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Item - MSN Engineering Pvt Ltd{% endblock %}
+
+{% block page_title %}Edit Item: {{ item.part_name }}{% endblock %}
+{% block page_subtitle %}Serial: {{ item.serial_number }}{% endblock %}
+
+{% block content %}
+<style>
+    .compact-form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .compact-form {
+        background: var(--white);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 15px rgba(165, 42, 42, 0.1);
+        border: 1px solid var(--gray-medium);
+    }
+
+    .compact-form-group {
+        margin-bottom: 1rem;
+    }
+
+    .compact-form-row {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .compact-form-row .compact-form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    .compact-form-group label {
+        display: block;
+        color: var(--maroon-dark);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .compact-form-group label i {
+        color: var(--maroon-primary);
+        margin-right: 6px;
+        width: 16px;
+    }
+
+    .compact-input, .compact-select, .compact-textarea {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--gray-medium);
+        border-radius: 6px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 0.9rem;
+        transition: all 0.2s ease;
+    }
+
+    .compact-input:focus, .compact-select:focus, .compact-textarea:focus {
+        border-color: var(--maroon-primary);
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(165, 42, 42, 0.1);
+    }
+
+    .compact-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23A52A2A' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.8rem center;
+        background-size: 12px;
+        padding-right: 2rem;
+    }
+
+    .compact-textarea {
+        resize: vertical;
+        min-height: 80px;
+    }
+
+    .form-helper {
+        font-size: 0.8rem;
+        color: var(--text-light);
+        margin-top: 0.25rem;
+        display: block;
+    }
+
+    .item-details-box {
+        background: var(--maroon-pale);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1.5rem 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        border: 1px solid rgba(165, 42, 42, 0.2);
+    }
+
+    .detail-item {
+        text-align: center;
+    }
+
+    .detail-label {
+        font-size: 0.8rem;
+        color: var(--maroon-dark);
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+        font-size: 0.95rem;
+        color: var(--text-dark);
+        font-weight: 700;
+        background: white;
+        padding: 0.4rem;
+        border-radius: 4px;
+        border: 1px solid var(--maroon-primary);
+    }
+
+    .compact-form-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--gray-medium);
+    }
+
+    .btn-compact {
+        padding: 0.6rem 1.2rem;
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        flex: 1;
+    }
+
+    .btn-compact-primary {
+        background: var(--maroon-primary);
+        color: white;
+    }
+
+    .btn-compact-primary:hover {
+        background: var(--maroon-dark);
+        transform: translateY(-1px);
+    }
+
+    .btn-compact-secondary {
+        background: var(--off-white);
+        color: var(--text-dark);
+        border: 1px solid var(--gray-medium);
+    }
+
+    .btn-compact-secondary:hover {
+        background: var(--gray-medium);
+    }
+
+    .btn-compact-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-compact-danger:hover {
+        background: #c82333;
+        transform: translateY(-1px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .compact-form-row {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .item-details-box {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+        
+        .compact-form-actions {
+            flex-direction: column;
+        }
+        
+        .btn-compact {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .compact-form {
+            padding: 1rem;
+        }
+        
+        .detail-item {
+            text-align: left;
+        }
+        
+        .detail-label, .detail-value {
+            display: inline-block;
+            width: auto;
+        }
+        
+        .detail-value {
+            margin-left: 0.5rem;
+        }
+    }
+</style>
+
+<div class="compact-form-container">
+    <div class="compact-form">
+        <form method="POST">
+            <!-- Basic Info Row -->
+            <div class="compact-form-row">
+                <div class="compact-form-group">
+                    <label for="part_name"><i class="bi bi-tag"></i> Part Name *</label>
+                    <input type="text" id="part_name" name="part_name" class="compact-input" 
+                           value="{{ item.part_name }}" required>
+                </div>
+                
+                <div class="compact-form-group">
+                    <label for="part_type"><i class="bi bi-gear"></i> Type *</label>
+                    <select id="part_type" name="part_type" class="compact-select" required>
+                        <option value="Pipe" {% if item.part_type == 'Pipe' %}selected{% endif %}>Pipe</option>
+                        <option value="Valve" {% if item.part_type == 'Valve' %}selected{% endif %}>Valve</option>
+                        <option value="Coupling" {% if item.part_type == 'Coupling' %}selected{% endif %}>Coupling</option>
+                        <option value="Fitting" {% if item.part_type == 'Fitting' %}selected{% endif %}>Fitting</option>
+                        <option value="Flange" {% if item.part_type == 'Flange' %}selected{% endif %}>Flange</option>
+                        <option value="Gasket" {% if item.part_type == 'Gasket' %}selected{% endif %}>Gasket</option>
+                        <option value="Other" {% if item.part_type == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Category & Dimensions -->
+            <div class="compact-form-row">
+                <div class="compact-form-group">
+                    <label for="category"><i class="bi bi-folder"></i> Category *</label>
+                    <select id="category" name="category" class="compact-select" required>
+                        <option value="Industrial" {% if item.category == 'Industrial' %}selected{% endif %}>Industrial</option>
+                        <option value="Plumbing" {% if item.category == 'Plumbing' %}selected{% endif %}>Plumbing</option>
+                        <option value="Construction" {% if item.category == 'Construction' %}selected{% endif %}>Construction</option>
+                        <option value="Raw Material" {% if item.category == 'Raw Material' %}selected{% endif %}>Raw Material</option>
+                        <option value="Finished Goods" {% if item.category == 'Finished Goods' %}selected{% endif %}>Finished Goods</option>
+                        <option value="Other" {% if item.category == 'Other' %}selected{% endif %}>Other</option>
+                    </select>
+                </div>
+                
+                <div class="compact-form-group">
+                    <label for="dimensions"><i class="bi bi-rulers"></i> Dimensions</label>
+                    <input type="text" id="dimensions" name="dimensions" class="compact-input" 
+                           value="{{ item.dimensions or '' }}" placeholder="Size/Measurements">
+                </div>
+            </div>
+            
+            <!-- Quantity & Price -->
+            <div class="compact-form-row">
+                <div class="compact-form-group">
+                    <label for="quantity"><i class="bi bi-box"></i> Quantity *</label>
+                    <input type="number" id="quantity" name="quantity" class="compact-input" 
+                           value="{{ item.quantity }}" required min="0">
+                </div>
+                
+                <div class="compact-form-group">
+                    <label for="unit_price"><i class="bi bi-currency-rupee"></i> Unit Price *</label>
+                    <input type="number" id="unit_price" name="unit_price" class="compact-input" 
+                           value="{{ "%.2f"|format(item.unit_price) }}" required step="0.01" min="0">
+                </div>
+            </div>
+            
+            <!-- Location & Supplier -->
+            <div class="compact-form-row">
+                <div class="compact-form-group">
+                    <label for="location"><i class="bi bi-geo-alt"></i> Location</label>
+                    <input type="text" id="location" name="location" class="compact-input" 
+                           value="{{ item.location or '' }}" placeholder="Storage location">
+                </div>
+                
+                <div class="compact-form-group">
+                    <label for="supplier"><i class="bi bi-truck"></i> Supplier</label>
+                    <input type="text" id="supplier" name="supplier" class="compact-input" 
+                           value="{{ item.supplier or '' }}" placeholder="Supplier name">
+                </div>
+            </div>
+            
+            <!-- Notes -->
+            <div class="compact-form-group">
+                <label for="notes"><i class="bi bi-card-text"></i> Notes</label>
+                <textarea id="notes" name="notes" class="compact-textarea" 
+                          placeholder="Additional notes...">{{ item.notes or '' }}</textarea>
+            </div>
+            
+            <!-- Item Details (Read-only) -->
+            <div class="item-details-box">
+                <div class="detail-item">
+                    <div class="detail-label">Serial No.</div>
+                    <div class="detail-value">{{ item.serial_number }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Date Added</div>
+                    <div class="detail-value">{{ item.date_added[:10] if item.date_added else 'N/A' }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Last Updated</div>
+                    <div class="detail-value">{{ item.last_updated[:10] if item.last_updated else 'Never' }}</div>
+                </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="compact-form-actions">
+                <button type="submit" class="btn-compact btn-compact-primary">
+                    <i class="bi bi-save"></i> Save Changes
+                </button>
+                <a href="{{ url_for('view_inventory') }}" class="btn-compact btn-compact-secondary">
+                    <i class="bi bi-x"></i> Cancel
+                </a>
+                <a href="{{ url_for('delete_item', item_id=item.id) }}" 
+                   class="btn-compact btn-compact-danger"
+                   onclick="return confirm('Delete this item permanently?');">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
